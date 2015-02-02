@@ -1,0 +1,105 @@
+<ion-view view-title="Timeline">
+  <ion-content direction="y">
+      <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+      </ion-refresher>
+
+      <ion-list class="timeline disable-user-behavior">
+        <div class="list">
+          <!-- <div class="item item-avatar">
+            <img ng-src="{{event.actor.avatar_url}}">
+            <div class="item-desc" >
+              <strong>asdkjasjkfjkss</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis earum molestias minima deleniti. Quibusdam ea quasi impedit id debitis! Qui nobis voluptates nisi placeat, sapiente maiores iste, veritatis voluptatem provident.
+            </div>
+          </div> -->
+
+          <div class="item item-avatar" ng-repeat="event in events">
+            <img ng-src="{{event.actor.avatar_url}}">
+
+            <div class="item-desc" ng-if="event.type === 'CreateEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> created {{event.payload.ref_type}} {{event.payload.ref ? event.payload.ref + ' at' : ''}} {{event.repo.name}}
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'DeleteEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> delete {{event.payload.ref_type}} {{event.payload.ref ? event.payload.ref + ' at' : ''}} {{event.repo.name}}
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'ForkEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> forked {{event.repo.name}} to {{event.payload.forkee.full_name}}
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'GollumEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> update wiki of {{event.repo.name}}
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'IssueCommentEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <div class="item-desc-action">comment on issue {{event.repo.name}}#{{event.payload.issue.number}}</div>
+              <div class="item-desc-content">{{event.payload.comment.body}}</div>
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'IssuesEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <div class="item-desc-action">{{event.payload.action}} {{event.repo.name}}#{{event.payload.issue.number}}</div>
+              <div class="item-desc-content">{{event.payload.comment.body}}</div>
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'MemberEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> {{event.payload.action}} {{event.payload.member.login}} to {{event.repo.name}}
+            </div>
+
+            <!-- TODO: need test -->
+            <div class="item-desc" ng-if="event.type === 'PublicEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> opensourced {{event.repo.name}}
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'PullRequestEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <div class="item-desc-action">{{event.payload.action}} pull request {{event.repo.name}}#{{event.payload.pull_request.number}}</div>
+              <div class="item-desc-content">{{event.payload.pull_request.title}}</div>
+              <div class="item-desc-note">{{event.payload.pull_request.commits}} commits with {{event.payload.pull_request.additions}} additions and {{event.payload.pull_request.deletions}} deletions</div>
+            </div>
+
+            <!-- PullRequestReviewCommentEvent -->
+
+            <div class="item-desc" ng-if="event.type === 'PushEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <div class="item-desc-action">pushed to {{event.payload.ref}} at {{event.repo.name}}</div>
+              <div class="item-desc-content">
+                <ul>
+                  <li>{{event.payload.commits[0].sha | limitTo: 8}} {{event.payload.commits[0].message}}</li>
+                  <li>{{event.payload.commits[1].sha | limitTo: 8}} {{event.payload.commits[1].message}}</li>
+                  <li ng-if="event.payload.commits.length - 2 > 0">{{event.payload.commits.length - 2}} more commits</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <!-- TODO need test -->
+            <div class="item-desc" ng-if="event.type === 'ReleaseEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <div class="item-desc-action">{{event.payload.action}} a release {{event.repo.name}} {{event.payload.release.tag_name}}</div>
+              <div class="item-desc-content">{{event.payload.pull_request.title}}</div>
+            </div>
+
+            <div class="item-desc" ng-if="event.type === 'WatchEvent'">
+              <strong>{{event.actor.login}}</strong><small class="item-timestamp" am-time-ago="event.created_at"></small>
+              <br> {{event.payload.action}} {{event.repo.name}}
+            </div>
+
+          </div>
+        </div>
+      </ion-list>
+      <ion-infinite-scroll on-infinite="loadMore()" distance="1%" icon="ion-loading-c" ng-if="page.next">
+
+      </ion-infinite-scroll>
+  </ion-content>
+</ion-view>

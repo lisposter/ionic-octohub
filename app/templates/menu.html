@@ -1,0 +1,57 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable">
+      <h1 class="title">Nav</h1>
+    </ion-header-bar>
+    <ion-content>
+      <div class="user">
+          <img ng-src="{{user.avatar_url}}" alt="" class="avatar">
+          <p class="name">{{user.name}}</p>
+          <p class="login-name">{{user.login}}</p>
+          <div class="row" ng-if="user.login">
+            <div class="col">
+              <div class="count">{{user.followers}}</div>
+              <div class="label">followers</div>
+            </div>
+            <div class="col">
+              <div class="count">{{user.following}}</div>
+              <div class="label">following</div>
+            </div>
+            <div class="col">
+              <div class="count">{{user.public_repos}}</div>
+              <div class="label">repos</div>
+            </div>
+          </div>
+      </div>
+      <ion-list>
+        <ion-item nav-clear menu-close ng-click="login()" ng-if="!user.login">
+          Login
+        </ion-item>
+        <ion-item nav-clear menu-close ng-if="user.login">
+          {{user.login}}
+        </ion-item>
+        <ion-item nav-clear menu-close ng-click="logout()" ng-if="user.login">
+          Logout
+        </ion-item>
+        <div class="item-divider">
+        </div>
+        <ion-item nav-clear menu-close href="#/app/timeline">
+          Timeline
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
