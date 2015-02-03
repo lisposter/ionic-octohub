@@ -63,15 +63,6 @@ angular.module('iOctoHub', ['angularMoment', 'ionic', 'ionic.utils', 'ngCordova'
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: "/search",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/search.html"
-      }
-    }
-  })
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/timeline');
 });

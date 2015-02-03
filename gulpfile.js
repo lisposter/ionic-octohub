@@ -13,7 +13,7 @@ var paths = {
   vendor_js: [
     'vendor/ionic/js/ionic.bundle.js',
     'vendor/ngCordova/dist/ng-cordova.min.js',
-    'vendor/ng-cordova-gatekeeper/ng-cordova-gatekeeper.js',
+    'vendor/ng-cordova-oauth-gatekeeper.js/ng-cordova-oauth-gatekeeper.js',
     'vendor/angular-moment/angular-moment.js',
     'vendor/moment/moment.js'
   ],
@@ -58,13 +58,13 @@ gulp.task('js', function(done) {
 
 gulp.task('vendor:js', function(done) {
   gulp.src(paths.vendor_js)
-    .pipe(copy('./www/lib/', { prefix: 1 }))
+    .pipe(copy('./www/vendor/', { prefix: 1 }))
     .on('end', done);
 });
 
 gulp.task('vendor:assets', function(done) {
   gulp.src(paths.vendor_assets)
-    .pipe(copy('./www/lib/', { prefix: 1 }))
+    .pipe(copy('./www/vendor/', { prefix: 1 }))
     .on('end', done);
 });
 
