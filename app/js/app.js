@@ -62,7 +62,13 @@ angular.module('iOctoHub', ['angularMoment', 'ionic', 'ionic.utils', 'ngCordova'
     templateUrl: "templates/menu.html",
     controller: 'AppCtrl'
   })
+  .state('landing', {
+    url: "/landing",
+    templateUrl: "templates/Landing.html",
+    controller: 'LandingCtrl',
+    controllerAs: 'Landing'
+  });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/timeline');
+  $urlRouterProvider.otherwise('/landing');
 });

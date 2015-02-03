@@ -40,4 +40,22 @@ angular.module('iOctoHub.controllers', [])
     $rootScope.user = {};
     $localstorage.setObject('user', {});
   };
+}])
+
+.controller('LandingCtrl', ['$cordovaGatekeeper', '$http', '$ionicModal', '$localstorage', '$rootScope', '$scope', '$state', '$timeout', function($cordovaGatekeeper, $http, $ionicModal, $localstorage, $rootScope, $scope, $state, $timeout) {
+
+  // Perform the login action when the user submits the login form
+  $scope.doLogin = function() {
+    $cordovaGatekeeper.auth(CFG.client_id, CFG.scope, CFG.gatekeeper).then(function(result) {
+      $localstorage.set('token', result.token);
+      $http.defaults.headers.common['Authorization'] = 'token ' + result.token;
+
+      $rootScope.getUser();
+      $state.go('app.timeline');
+    }, function(error) {
+      console.log(error);
+    })
+  };
+
+
 }]);

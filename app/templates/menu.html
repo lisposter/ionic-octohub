@@ -17,11 +17,11 @@
       <h1 class="title">Nav</h1>
     </ion-header-bar>
     <ion-content>
-      <div class="user">
+      <div class="user" ng-if="user.login">
           <img ng-src="{{user.avatar_url}}" alt="" class="avatar">
           <p class="name">{{user.name}}</p>
           <p class="login-name">{{user.login}}</p>
-          <div class="row" ng-if="user.login">
+          <div class="row">
             <div class="col">
               <div class="count">{{user.followers}}</div>
               <div class="label">followers</div>
